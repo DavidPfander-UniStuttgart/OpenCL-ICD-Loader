@@ -16,8 +16,26 @@ endif ()
 
 # Change this to point to a directory containing OpenCL header directory "CL"
 # OR copy OpenCL headers to ./inc/CL/
+if (NOT OPENCL_INCLUDE_DIRS)
+  if (DEFINED ENV{OPENCL_INCLUDE_DIRS})
+    set(OPENCL_INCLUDE_DIRS $ENV{OPENCL_INCLUDE_DIRS})
+  endif ()
+endif ()
+
 if (NOT DEFINED OPENCL_INCLUDE_DIRS)
     set (OPENCL_INCLUDE_DIRS ./inc)
+endif ()
+
+if (NOT OPENCL_ICD_DIR)
+  set(OPENCL_ICD_DIR $ENV{OPENCL_ICD_DIR})
+endif ()
+
+if (NOT OPENCL_ICD_DIR)
+  set(OPENCL_ICD_DIR "/etc/OpenCL/vendors/")
+endif ()
+
+if(OPENCL_ICD_DIR)
+  add_definitions(-DOPENCL_ICD_DIR=${OPENCL_ICD_DIR})
 endif ()
 
 include_directories (${OPENCL_INCLUDE_DIRS})

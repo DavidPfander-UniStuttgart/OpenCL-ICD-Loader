@@ -44,6 +44,12 @@
 #include <dirent.h>
 #include <pthread.h>
 
+// macros for stringifications
+// xstr adds quotation marks to expanded s
+#define xstr(s) str(s)
+// str expands to not-expanded s
+#define str(s) #s
+
 static pthread_once_t initialized = PTHREAD_ONCE_INIT;
 
 /*
@@ -60,7 +66,7 @@ void khrIcdOsVendorsEnumerate(void)
 #ifdef __ANDROID__
     char *vendorPath = "/system/vendor/Khronos/OpenCL/vendors/";
 #else
-    char *vendorPath = "/etc/OpenCL/vendors/";
+    char *vendorPath = xstr(OPENCL_ICD_DIR);
 #endif // ANDROID
 
     // open the directory
